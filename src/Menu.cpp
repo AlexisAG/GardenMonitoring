@@ -4,11 +4,15 @@
 /* CONSTRUCTOR */
 Menu::Menu()
 {
-
+    _indexNavigation = 0;
+    _indexAlarm;
+    _isInAlarmModeConfiguration;
+    _firstRow;     
+    _secondRow; 
 }
-Menu::Menu(Inspection insp)
+Menu::Menu(Inspection insp) : Menu()
 {
-
+  _inspection = insp;
 }
 
 /* NAVIGATION */

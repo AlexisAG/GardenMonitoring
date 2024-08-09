@@ -4,20 +4,35 @@
 /*Constructor*/
 Inspection::Inspection()
 {
+  /* Init default data */
+  _storedData[DAILY].name = "Daily Average";
+  _storedData[DAILY].type = Data_Type::Current_Day;
+  _storedData[DAILY].name = "Weekly Average";
+  _storedData[DAILY].type = Data_Type::LastWeek;
+  _storedData[DAILY].name = "Monthly Average";
+  _storedData[DAILY].type = Data_Type::LastMonth;
+  
+  _storedData[HUMIDITY].name = "Daily Average";
+  _storedData[HUMIDITY].type = Data_Type::Current_Day;
+  _storedData[HUMIDITY].name = "Weekly Average";
+  _storedData[HUMIDITY].type = Data_Type::LastWeek;
+  _storedData[HUMIDITY].name = "Monthly Average";
+  _storedData[HUMIDITY].type = Data_Type::LastMonth;
 
+  _storedData[LUMINOSITY].name = "Daily Average";
+  _storedData[LUMINOSITY].type = Data_Type::Current_Day;
+  _storedData[LUMINOSITY].name = "Weekly Average";
+  _storedData[LUMINOSITY].type = Data_Type::LastWeek;
+  _storedData[LUMINOSITY].name = "Monthly Average";
+  _storedData[LUMINOSITY].type = Data_Type::LastMonth;
 }
 
-Inspection::Inspection(const char* name, const char* unit, InspectionType type, Data data[NB_DATA])
+Inspection::Inspection(const char* name, const char* unit, InspectionType type) : Inspection()
 {
   /* Private properties */ 
   _name = name;
   _unitDisp = unit;
   _type = type;
-
-  for (int i = 0; i < NB_DATA; i++) 
-  {
-    _storedData[i] = data[i];
-  }
 }
 
 

@@ -4,31 +4,22 @@
 /*Constructor*/
 Inspection::Inspection()
 {
+    Serial.println(_unitDisp);
+
   /* Init default data */
+  _storedData[ACTUAL].name = "Daily Average";
+  _storedData[ACTUAL].type = Data_Type::Actual;
   _storedData[DAILY].name = "Daily Average";
   _storedData[DAILY].type = Data_Type::Current_Day;
-  _storedData[DAILY].name = "Weekly Average";
-  _storedData[DAILY].type = Data_Type::LastWeek;
-  _storedData[DAILY].name = "Monthly Average";
-  _storedData[DAILY].type = Data_Type::LastMonth;
-  
-  _storedData[HUMIDITY].name = "Daily Average";
-  _storedData[HUMIDITY].type = Data_Type::Current_Day;
-  _storedData[HUMIDITY].name = "Weekly Average";
-  _storedData[HUMIDITY].type = Data_Type::LastWeek;
-  _storedData[HUMIDITY].name = "Monthly Average";
-  _storedData[HUMIDITY].type = Data_Type::LastMonth;
-
-  _storedData[LUMINOSITY].name = "Daily Average";
-  _storedData[LUMINOSITY].type = Data_Type::Current_Day;
-  _storedData[LUMINOSITY].name = "Weekly Average";
-  _storedData[LUMINOSITY].type = Data_Type::LastWeek;
-  _storedData[LUMINOSITY].name = "Monthly Average";
-  _storedData[LUMINOSITY].type = Data_Type::LastMonth;
+  _storedData[WEEKLY].name = "Weekly Average";
+  _storedData[WEEKLY].type = Data_Type::LastWeek;
+  _storedData[MONTHLY].name = "Monthly Average";
+  _storedData[MONTHLY].type = Data_Type::LastMonth;
 }
 
 Inspection::Inspection(const char* name, const char* unit, InspectionType type) : Inspection()
 {
+  Serial.println(name);
   /* Private properties */ 
   _name = name;
   _unitDisp = unit;
@@ -63,4 +54,19 @@ bool Inspection::InsertData(int index, Data data)
   if (index >= NB_DATA) return false;
 
   _storedData[index] = data;
+}
+
+char* Inspection::GetName()
+{
+  return (char*)_name;
+}
+
+char* Inspection::GetUnit()
+{
+  return (char*)_unitDisp;
+}
+
+int Inspection::GetType()
+{
+  return _type;
 }

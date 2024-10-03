@@ -5,17 +5,6 @@
 #include "Data.h"
 
 #define MAX_ALARMS 3
-#define NB_DATA    3
-
-/* DATA INDEX */
-#define DAILY   0
-#define WEEKLY  1
-#define MONTHLY 2
-
-/* INSPECTION INDEX*/
-#define TEMPERATURE 0
-#define HUMIDITY    1
-#define LUMINOSITY  2
 
 enum InspectionType
 {
@@ -36,6 +25,10 @@ class Inspection
     Data GetData(int index);
     bool InsertData(int index, Data data);
     
+    char* GetName();
+    char* GetUnit();
+    int   GetType();
+
   private:
 
     const char*    _name;

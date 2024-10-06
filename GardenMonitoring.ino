@@ -1,7 +1,8 @@
 #include <LiquidCrystal.h>
 #include "src/Menu.h"
 
-#define NB_MENU 3 // one for each inspection
+#define DELAY_MS 30
+#define NB_MENU  3 // one for each inspection
 
 /* INSPECTION INDEX*/
 #define TEMPERATURE 0
@@ -43,8 +44,6 @@ char secondRow[LCD_COL]; // LCD SCREEN
 int selectButtonState;
 int indexNavigation;
 
-bool nextMenu;
-bool nextData;
 bool enterSettingsMode;
 bool nextAlarm;
 
@@ -74,8 +73,6 @@ void setup()
 
  /* init navigation */
   indexNavigation = 0;
-  nextMenu = false;
-  nextData = false;
   enterSettingsMode = false;
   nextAlarm = false;
 
@@ -89,7 +86,7 @@ void loop()
 {
   HandleJoystickInput();
 
-  delay(30);
+  delay(DELAY_MS);
 }
 
 void HandleJoystickInput()

@@ -3,22 +3,29 @@
 
 #include "Inspection.h"
 
+#define BUFFER_SIZE 32
+
 class Menu 
 {
   public:
     Menu();
-    Menu(Inspection insp);
+    Menu(Inspection* insp);
 
-    void SetDisplay(char* firstRow, char* secondRow);
-    void NextDisplay();
+    void ChangeData(int index);
+    void NextData();
+    void PreviousData();
     void ConfigureAlarm();
+    char* GetTitle();
+    char* GetDesc();
+    void TEST();
   private:
     int         _indexNavigation;
     int         _indexAlarm;
     bool        _isInAlarmModeConfiguration;
-    char*       _firstRow;     
-    char*       _secondRow;     
-    Inspection  _inspection;
+    char       _firstRow[BUFFER_SIZE];     
+    char       _secondRow[BUFFER_SIZE];     
+    Inspection* _inspection;
+    void SetDisplay();
 
 
 };

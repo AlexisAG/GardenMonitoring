@@ -4,20 +4,27 @@
 /*Constructor*/
 Inspection::Inspection()
 {
+  /* Init default data */
+  _storedData[ACTUAL].name = "Actual";
+  _storedData[ACTUAL].type = Data_Type::Actual;
 
+  _storedData[DAILY].name = "Daily";
+  _storedData[DAILY].type = Data_Type::Current_Day;
+
+  _storedData[WEEKLY].name = "Weekly";
+  _storedData[WEEKLY].type = Data_Type::LastWeek;
+
+  _storedData[MONTHLY].name = "Monthly";
+  _storedData[MONTHLY].type = Data_Type::LastMonth;
 }
 
-Inspection::Inspection(const char* name, const char* unit, InspectionType type, Data data[NB_DATA])
+Inspection::Inspection(const char* name, const char* unit, InspectionType type) : Inspection()
 {
+  Serial.println(name);
   /* Private properties */ 
   _name = name;
   _unitDisp = unit;
   _type = type;
-
-  for (int i = 0; i < NB_DATA; i++) 
-  {
-    _storedData[i] = data[i];
-  }
 }
 
 
@@ -48,4 +55,19 @@ bool Inspection::InsertData(int index, Data data)
   if (index >= NB_DATA) return false;
 
   _storedData[index] = data;
+}
+
+char* Inspection::GetName()
+{
+  return (char*)_name;
+}
+
+char* Inspection::GetUnit()
+{
+  return (char*)_unitDisp;
+}
+
+int Inspection::GetType()
+{
+  return _type;
 }

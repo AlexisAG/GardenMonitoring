@@ -5,7 +5,6 @@
 #include "Data.h"
 
 #define MAX_ALARMS 3
-#define NB_DATA    3
 
 enum InspectionType
 {
@@ -18,7 +17,7 @@ class Inspection
 {
   public:
     Inspection();
-    Inspection(const char* name, const char* unit, InspectionType type, Data data[NB_DATA]);
+    Inspection(const char* name, const char* unit, InspectionType type);
     
     Alarm GetAlarm(int index);
     bool InsertAlarm(int index, Alarm alarm);
@@ -26,6 +25,10 @@ class Inspection
     Data GetData(int index);
     bool InsertData(int index, Data data);
     
+    char* GetName();
+    char* GetUnit();
+    int   GetType();
+
   private:
 
     const char*    _name;

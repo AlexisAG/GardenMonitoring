@@ -2,7 +2,7 @@
 #define Data_h
 
 #define NB_DATA    4
-
+#define DATA_ARRAY 32
 /* DATA INDEX */
 #define ACTUAL  0
 #define DAILY   1 // Average last 24h
@@ -21,7 +21,7 @@ struct Data
 {
   public:
     const char* name;
-    int         data[32];
+    int         data[DATA_ARRAY] = {-1};
     Data_Type   type;
 };
 

@@ -21,9 +21,33 @@ Menu::Menu(Inspection* insp) : Menu()
 void Menu::SetDisplay()
 {
   Data data = _inspection->GetData(_indexNavigation);
+  int dataResult = -1;
 
+  // title
   snprintf(_firstRow, BUFFER_SIZE, "%s (%s)", _inspection->GetName(), _inspection->GetUnit());
-  snprintf(_secondRow, BUFFER_SIZE, "%s : %d%s", data.name, data.type, _inspection->GetUnit());
+  
+  // data
+  switch (_indexNavigation) {
+  case ACTUAL:
+    dataResult = data.data[0];
+  default:
+  int i = 0;
+  int temp = 0;
+    for (i = 0; i < DATA_ARRAY; i++) 
+    {
+      if (data.data[i] < 0)
+      {
+        break;
+      }
+
+      temp += data.data[i];
+    }
+
+    dataResult = (temp > 0 && i > 0) ? temp/i : -1;
+  break;
+  }
+  
+  snprintf(_secondRow, BUFFER_SIZE, "%s : %d%s", data.name, dataResult, _inspection->GetUnit());
 }
 
 /* Change the data to display */

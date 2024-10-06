@@ -76,9 +76,8 @@ void setup()
   enterSettingsMode = false;
   nextAlarm = false;
 
-
-  DisplayOnLcd("READY", "WORK IN PROGRESS");
   ChangeMenu();
+  RefreshDisplay();
 }
 
 /*put your main code here, to run repeatedly: */
@@ -92,6 +91,7 @@ void loop()
 void HandleJoystickInput()
 {
   bool state = digitalRead(BUTTON_SELECT);
+  bool needRefresh = false;
   Axis_State axis = GetAxis();
 
   if (axis != axisState && axis != Axis_State::Idle)
@@ -101,19 +101,26 @@ void HandleJoystickInput()
       case Axis_State::Left:
         indexNavigation--;
         ChangeMenu();
+        needRefresh = true;
       break;
       case Axis_State::Right:
         indexNavigation++;
         ChangeMenu();
+        needRefresh = true;
       break;
       case Axis_State::Up:
         menus[indexNavigation].PreviousData();
-        ChangeData();
+        needRefresh = true;
       break;
       case Axis_State::Down:
         menus[indexNavigation].NextData();
-        ChangeData();
+        needRefresh = true;
       break;
+    }
+
+    if (needRefresh)
+    {
+      RefreshDisplay();
     }
   }
 
@@ -184,14 +191,9 @@ void ChangeMenu()
   }
 
   menus[indexNavigation].ChangeData(0);
-
-  char* test1 = menus[indexNavigation].GetTitle();
-  char* test2 = menus[indexNavigation].GetDesc();
-
-  DisplayOnLcd(test1, test2);
 }
 
-void ChangeData()
+void RefreshDisplay()
 {
   char* test1 = menus[indexNavigation].GetTitle();
   char* test2 = menus[indexNavigation].GetDesc();

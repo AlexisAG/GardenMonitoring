@@ -4,8 +4,6 @@
 /*Constructor*/
 Inspection::Inspection()
 {
-    Serial.println(_unitDisp);
-
   /* Init default data */
   _storedData[ACTUAL].name = "Actual";
   _storedData[ACTUAL].type = Data_Type::Actual;

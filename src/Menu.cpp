@@ -46,7 +46,7 @@ void Menu::SetDisplay()
     dataResult = (temp > 0 && i > 0) ? temp/i : -1;
   break;
   }
-  
+
   snprintf(_secondRow, BUFFER_SIZE, "%s : %d%s", data.name, dataResult, _inspection->GetUnit());
 }
 
@@ -84,8 +84,6 @@ void Menu::ConfigureAlarm()
 
 }
 
-
-
 char* Menu::GetTitle()
 {
   return _firstRow;
@@ -94,11 +92,4 @@ char* Menu::GetTitle()
 char* Menu::GetDesc()
 {
   return _secondRow;
-}
-
-
-void Menu::TEST()
-{
-  Serial.println(_firstRow);
-  Serial.println(_secondRow);
 }

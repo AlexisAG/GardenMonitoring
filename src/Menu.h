@@ -25,7 +25,6 @@ class Menu
     char       _firstRow[BUFFER_SIZE];     
     char       _secondRow[BUFFER_SIZE];     
     Inspection* _inspection;
-    
     void SetDisplay();
 
 

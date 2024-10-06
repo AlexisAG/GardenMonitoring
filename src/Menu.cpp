@@ -4,7 +4,6 @@
 /* CONSTRUCTOR */
 Menu::Menu()
 {
-    //Serial.print("WESH \n");
     _indexNavigation = -1;
     _indexAlarm;
     _isInAlarmModeConfiguration;
@@ -21,27 +20,38 @@ Menu::Menu(Inspection* insp) : Menu()
 /* Display the information */
 void Menu::SetDisplay()
 {
-  char bufferTitle[32];
-  char bufferDesc[32];
-  
-  sprintf(bufferTitle, "%s (%s)", _inspection->GetName(), _inspection->GetUnit());
-  _firstRow = bufferTitle;
+  Data data = _inspection->GetData(_indexNavigation);
 
-  sprintf(bufferDesc, "WIP ON DATA");
-  _secondRow = bufferDesc;
-
+  snprintf(_firstRow, BUFFER_SIZE, "%s (%s)", _inspection->GetName(), _inspection->GetUnit());
+  snprintf(_secondRow, BUFFER_SIZE, "%s : %d%s", data.name, data.type, _inspection->GetUnit());
 }
-/* Change the data or the alarm to display */
-void Menu::NextDisplay()
-{
-  _indexNavigation++;
 
-  if (_indexNavigation < 0 || _indexNavigation >= NB_DATA)
+/* Change the data to display */
+void Menu::ChangeData(int index)
+{
+  _indexNavigation = index;
+
+  if (_indexNavigation >= NB_DATA)
   {
     _indexNavigation = 0;
   }
+  else if (_indexNavigation < 0)
+  {
+    _indexNavigation = NB_DATA - 1;
+  }
 
   SetDisplay();
+}
+
+void Menu::NextData()
+{
+  ChangeData(_indexNavigation + 1);
+}
+
+
+void Menu::PreviousData()
+{
+  ChangeData(_indexNavigation - 1);
 }
 
 /* Handle Alarm setup */

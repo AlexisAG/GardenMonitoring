@@ -7,14 +7,21 @@ Inspection::Inspection()
     Serial.println(_unitDisp);
 
   /* Init default data */
-  _storedData[ACTUAL].name = "Daily Average";
+  _storedData[ACTUAL].name = "Actual";
   _storedData[ACTUAL].type = Data_Type::Actual;
-  _storedData[DAILY].name = "Daily Average";
+  _storedData[ACTUAL].data[0] = ACTUAL;
+
+  _storedData[DAILY].name = "Daily";
   _storedData[DAILY].type = Data_Type::Current_Day;
-  _storedData[WEEKLY].name = "Weekly Average";
+  _storedData[DAILY].data[0] = DAILY;
+
+  _storedData[WEEKLY].name = "Weekly";
   _storedData[WEEKLY].type = Data_Type::LastWeek;
-  _storedData[MONTHLY].name = "Monthly Average";
+  _storedData[WEEKLY].data[0] = WEEKLY;
+
+  _storedData[MONTHLY].name = "Monthly";
   _storedData[MONTHLY].type = Data_Type::LastMonth;
+  _storedData[MONTHLY].data[0] = WEEKLY;
 }
 
 Inspection::Inspection(const char* name, const char* unit, InspectionType type) : Inspection()

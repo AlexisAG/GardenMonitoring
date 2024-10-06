@@ -17,7 +17,7 @@
 /* ELECTRONICS CONSTANTS */
 #define LCD_COL       16
 #define LCD_ROW       2
-#define AXIS_DEADZONE 0.1
+#define AXIS_DEADZONE 0.33
 #define AXIS_DEFAULT  512
 #define AXIS_MIN      0
 #define AXIS_MAX      1024
@@ -110,8 +110,12 @@ void HandleJoystickInput()
         ChangeMenu();
       break;
       case Axis_State::Up:
+        menus[indexNavigation].PreviousData();
+        ChangeData();
       break;
       case Axis_State::Down:
+        menus[indexNavigation].NextData();
+        ChangeData();
       break;
     }
   }
@@ -182,7 +186,7 @@ void ChangeMenu()
     indexNavigation = NB_MENU - 1;
   }
 
-  menus[indexNavigation].NextDisplay();
+  menus[indexNavigation].ChangeData(0);
 
   char* test1 = menus[indexNavigation].GetTitle();
   char* test2 = menus[indexNavigation].GetDesc();
@@ -192,5 +196,8 @@ void ChangeMenu()
 
 void ChangeData()
 {
+  char* test1 = menus[indexNavigation].GetTitle();
+  char* test2 = menus[indexNavigation].GetDesc();
 
+  DisplayOnLcd(test1, test2);
 }

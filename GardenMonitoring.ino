@@ -2,8 +2,9 @@
 #include "src/library/dht_nonblocking.h"
 #include "src/Menu.h"
 
-#define DELAY_MS 30
-#define NB_MENU  3 // one for each inspection
+#define DELAY_MS          30
+#define TIMER_MEASUREMENT 10 * 1000
+#define NB_MENU           3 // one for each inspection
 
 /* INSPECTION INDEX*/
 #define TEMPERATURE 0
@@ -42,6 +43,7 @@ enum Axis_State
   Down  = 4
 };
 
+static unsigned long timer;
 
 Axis_State axisState;
 
@@ -54,7 +56,6 @@ char secondRow[LCD_COL]; // LCD SCREEN
 
 int selectButtonState;
 int indexNavigation;
-
 bool enterSettingsMode;
 bool nextAlarm;
 
@@ -89,12 +90,31 @@ void setup()
 
   ChangeMenu();
   RefreshDisplay();
+
+  timer = millis();
 }
 
 /*put your main code here, to run repeatedly: */
 void loop() 
 {
   HandleJoystickInput();
+
+  /* Measure once every four seconds. */
+  if( millis() - timer > TIMER_MEASUREMENT)
+  {
+    float temperature = -1;
+    float humidity    = -1;
+
+    if(DHT_Measurement(&temperature, &humidity))
+    {
+      Serial.println(humidity);
+      menus[TEMPERATURE].AddData((int)temperature);
+      menus[HUMIDITY].AddData(humidity);
+      timer = millis();
+    }
+
+    RefreshDisplay();
+  }
 
   delay(DELAY_MS);
 }
@@ -210,4 +230,22 @@ void RefreshDisplay()
   char* test2 = menus[indexNavigation].GetDesc();
 
   DisplayOnLcd(test1, test2);
+}
+
+
+/* Data Measurement */
+
+/*
+ * Poll for a measurement, keeping the state machine alive.  Returns
+ * true if a measurement is available.
+ */
+static bool DHT_Measurement( float* temperature, float* humidity )
+{
+  if( dht.measure( temperature, humidity ) == true )
+  {
+    Serial.println("READ DATA FROM DHT");
+    return true;
+  }
+
+  return false;
 }

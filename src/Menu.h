@@ -11,6 +11,7 @@ class Menu
     Menu();
     Menu(Inspection* insp);
 
+    void AddData(int data);
     void ChangeData(int index);
     void NextData();
     void PreviousData();

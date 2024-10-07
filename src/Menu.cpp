@@ -51,6 +51,12 @@ void Menu::SetDisplay()
   snprintf(_secondRow, BUFFER_SIZE, "%s : %d%s", data.name, dataResult, _inspection->GetUnit());
 }
 
+void Menu::AddData(int data)
+{
+  _inspection->AddMeasurement(data);
+  SetDisplay();
+}
+
 /* Change the data to display */
 void Menu::ChangeData(int index)
 {

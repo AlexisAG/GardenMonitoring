@@ -16,6 +16,11 @@ Inspection::Inspection()
 
   _storedData[MONTHLY].name = "Monthly";
   _storedData[MONTHLY].type = Data_Type::LastMonth;
+
+  /* init counter */
+  _actualCounter = 0;
+  _hourlyCounter = 0;
+  _dailyCounter  = 0;
 }
 
 Inspection::Inspection(const char* name, const char* unit, InspectionType type) : Inspection()
@@ -50,11 +55,19 @@ Data Inspection::GetData(int index)
 
   return _storedData[index];
 }
+
 bool Inspection::InsertData(int index, Data data)
 {
   if (index >= NB_DATA) return false;
 
   _storedData[index] = data;
+}
+
+void Inspection::AddMeasurement(int data)
+{
+  _actualCounter++;
+
+  _storedData[ACTUAL].data[0] = data;
 }
 
 char* Inspection::GetName()

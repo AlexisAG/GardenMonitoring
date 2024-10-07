@@ -30,6 +30,7 @@ void Menu::SetDisplay()
   switch (_indexNavigation) {
   case ACTUAL:
     dataResult = data.data[0];
+    break;
   default:
   int i = 0;
   int temp = 0;

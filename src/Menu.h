@@ -17,7 +17,6 @@ class Menu
     void ConfigureAlarm();
     char* GetTitle();
     char* GetDesc();
-    void TEST();
   private:
     int         _indexNavigation;
     int         _indexAlarm;

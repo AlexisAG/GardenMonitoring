@@ -1,4 +1,5 @@
 #include <LiquidCrystal.h>
+#include "src/library/dht_nonblocking.h"
 #include "src/Menu.h"
 
 #define DELAY_MS 30
@@ -10,6 +11,7 @@
 #define LUMINOSITY  2
 
 /* ELECTRONIC PIN */
+#define DHT_PIN       8
 #define BUTTON_SELECT 7
 #define AXIS_X        A0
 #define AXIS_Y        A1

@@ -11,19 +11,27 @@
 #define LUMINOSITY  2
 
 /* ELECTRONIC PIN */
-#define DHT_PIN       8
+#define LCD_D4        2
+#define LCD_D5        3
+#define LCD_D6        4
+#define LCD_D7        5
 #define BUTTON_SELECT 7
+#define DHT_PIN       8
+#define LCD_ENABLE    11
+#define LCD_RS        12
 #define AXIS_X        A0
 #define AXIS_Y        A1
 
 
 /* ELECTRONICS CONSTANTS */
-#define LCD_COL       16
-#define LCD_ROW       2
-#define AXIS_DEADZONE 0.33
-#define AXIS_DEFAULT  512
-#define AXIS_MIN      0
-#define AXIS_MAX      1024
+#define LCD_COL         16
+#define LCD_ROW         2
+#define AXIS_DEADZONE   0.33
+#define AXIS_DEFAULT    512
+#define AXIS_MIN        0
+#define AXIS_MAX        1024
+#define DHT_SENSOR_TYPE DHT_TYPE_11
+
 
 enum Axis_State
 {
@@ -37,7 +45,8 @@ enum Axis_State
 
 Axis_State axisState;
 
-LiquidCrystal lcd(12, 11, 2, 3, 4, 5); //LCD SCREEN
+LiquidCrystal lcd(LCD_RS, LCD_ENABLE, LCD_D4, LCD_D5, LCD_D6, LCD_D7); //LCD SCREEN
+DHT_nonblocking dht(DHT_PIN, DHT_SENSOR_TYPE);
 Menu menus[NB_MENU];
 
 char firstRow[LCD_COL]; // LCD SCREEN

@@ -107,7 +107,6 @@ void loop()
 
     if(DHT_Measurement(&temperature, &humidity))
     {
-      Serial.println(humidity);
       menus[TEMPERATURE].AddData((int)temperature);
       menus[HUMIDITY].AddData(humidity);
       timer = millis();
@@ -243,7 +242,6 @@ static bool DHT_Measurement( float* temperature, float* humidity )
 {
   if( dht.measure( temperature, humidity ) == true )
   {
-    Serial.println("READ DATA FROM DHT");
     return true;
   }
 

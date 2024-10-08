@@ -6,7 +6,9 @@
 
 #define MAX_ALARMS        3
 #define HOURLY_COUNTER    6*60
-#define DAILY_CONTER      24
+#define DAILY_COUNTER      23
+#define WEEKLY_COUNTER    6
+#define MONTHLY_COUNTER   29
 
 enum InspectionType
 {
@@ -38,7 +40,8 @@ class Inspection
     const char*    _unitDisp;
     int            _actualCounter;
     int            _hourlyCounter;
-    int            _dailyCounter;
+    int            _weeklyCounter;
+    int            _monthlylyCounter;
     InspectionType _type;
     Data           _storedData[NB_DATA];  
     Alarm          _alarms[MAX_ALARMS];      

@@ -27,7 +27,8 @@ void Menu::SetDisplay()
   snprintf(_firstRow, BUFFER_SIZE, "%s (%s)", _inspection->GetName(), _inspection->GetUnit());
   
   // data
-  switch (_indexNavigation) {
+  switch (_indexNavigation) 
+  {
   case ACTUAL:
     dataResult = data.data[0];
     break;
@@ -36,7 +37,7 @@ void Menu::SetDisplay()
   int temp = 0;
     for (i = 0; i < DATA_ARRAY; i++) 
     {
-      if (data.data[i] < 0)
+      if (data.data[i] <= 0)
       {
         break;
       }

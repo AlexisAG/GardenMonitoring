@@ -11,13 +11,13 @@ class Menu
     Menu();
     Menu(Inspection* insp);
 
+    void AddData(int data);
     void ChangeData(int index);
     void NextData();
     void PreviousData();
     void ConfigureAlarm();
     char* GetTitle();
     char* GetDesc();
-    void TEST();
   private:
     int         _indexNavigation;
     int         _indexAlarm;

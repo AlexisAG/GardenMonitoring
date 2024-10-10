@@ -1,8 +1,10 @@
 #include <LiquidCrystal.h>
+#include "src/library/dht_nonblocking.h"
 #include "src/Menu.h"
 
-#define DELAY_MS 30
-#define NB_MENU  3 // one for each inspection
+#define DELAY_MS          30
+#define TIMER_MEASUREMENT 10 * 1000
+#define NB_MENU           3 // one for each inspection
 
 /* INSPECTION INDEX*/
 #define TEMPERATURE 0
@@ -10,18 +12,27 @@
 #define LUMINOSITY  2
 
 /* ELECTRONIC PIN */
+#define LCD_D4        2
+#define LCD_D5        3
+#define LCD_D6        4
+#define LCD_D7        5
 #define BUTTON_SELECT 7
+#define DHT_PIN       8
+#define LCD_ENABLE    11
+#define LCD_RS        12
 #define AXIS_X        A0
 #define AXIS_Y        A1
 
 
 /* ELECTRONICS CONSTANTS */
-#define LCD_COL       16
-#define LCD_ROW       2
-#define AXIS_DEADZONE 0.33
-#define AXIS_DEFAULT  512
-#define AXIS_MIN      0
-#define AXIS_MAX      1024
+#define LCD_COL         16
+#define LCD_ROW         2
+#define AXIS_DEADZONE   0.33
+#define AXIS_DEFAULT    512
+#define AXIS_MIN        0
+#define AXIS_MAX        1024
+#define DHT_SENSOR_TYPE DHT_TYPE_11
+
 
 enum Axis_State
 {
@@ -32,10 +43,12 @@ enum Axis_State
   Down  = 4
 };
 
+static unsigned long timer;
 
 Axis_State axisState;
 
-LiquidCrystal lcd(12, 11, 2, 3, 4, 5); //LCD SCREEN
+LiquidCrystal lcd(LCD_RS, LCD_ENABLE, LCD_D4, LCD_D5, LCD_D6, LCD_D7); //LCD SCREEN
+DHT_nonblocking dht(DHT_PIN, DHT_SENSOR_TYPE);
 Menu menus[NB_MENU];
 
 char firstRow[LCD_COL]; // LCD SCREEN
@@ -43,7 +56,6 @@ char secondRow[LCD_COL]; // LCD SCREEN
 
 int selectButtonState;
 int indexNavigation;
-
 bool enterSettingsMode;
 bool nextAlarm;
 
@@ -78,12 +90,30 @@ void setup()
 
   ChangeMenu();
   RefreshDisplay();
+
+  timer = millis();
 }
 
 /*put your main code here, to run repeatedly: */
 void loop() 
 {
   HandleJoystickInput();
+
+  /* Measure once every four seconds. */
+  if( millis() - timer > TIMER_MEASUREMENT)
+  {
+    float temperature = -1;
+    float humidity    = -1;
+
+    if(DHT_Measurement(&temperature, &humidity))
+    {
+      menus[TEMPERATURE].AddData((int)temperature);
+      menus[HUMIDITY].AddData(humidity);
+      timer = millis();
+    }
+
+    RefreshDisplay();
+  }
 
   delay(DELAY_MS);
 }
@@ -199,4 +229,21 @@ void RefreshDisplay()
   char* test2 = menus[indexNavigation].GetDesc();
 
   DisplayOnLcd(test1, test2);
+}
+
+
+/* Data Measurement */
+
+/*
+ * Poll for a measurement, keeping the state machine alive.  Returns
+ * true if a measurement is available.
+ */
+static bool DHT_Measurement( float* temperature, float* humidity )
+{
+  if( dht.measure( temperature, humidity ) == true )
+  {
+    return true;
+  }
+
+  return false;
 }

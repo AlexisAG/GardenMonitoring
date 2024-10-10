@@ -3,6 +3,7 @@
 
 #define NB_DATA    4
 #define DATA_ARRAY 32
+
 /* DATA INDEX */
 #define ACTUAL  0
 #define DAILY   1 // Average last 24h

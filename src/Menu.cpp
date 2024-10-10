@@ -27,15 +27,17 @@ void Menu::SetDisplay()
   snprintf(_firstRow, BUFFER_SIZE, "%s (%s)", _inspection->GetName(), _inspection->GetUnit());
   
   // data
-  switch (_indexNavigation) {
+  switch (_indexNavigation) 
+  {
   case ACTUAL:
     dataResult = data.data[0];
+    break;
   default:
   int i = 0;
   int temp = 0;
     for (i = 0; i < DATA_ARRAY; i++) 
     {
-      if (data.data[i] < 0)
+      if (data.data[i] <= 0)
       {
         break;
       }
@@ -48,6 +50,12 @@ void Menu::SetDisplay()
   }
 
   snprintf(_secondRow, BUFFER_SIZE, "%s : %d%s", data.name, dataResult, _inspection->GetUnit());
+}
+
+void Menu::AddData(int data)
+{
+  _inspection->AddMeasurement(data);
+  SetDisplay();
 }
 
 /* Change the data to display */

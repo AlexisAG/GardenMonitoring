@@ -4,7 +4,11 @@
 #include "Alarm.h"
 #include "Data.h"
 
-#define MAX_ALARMS 3
+#define MAX_ALARMS        3
+#define HOURLY_COUNTER    6*60
+#define DAILY_COUNTER      23
+#define WEEKLY_COUNTER    6
+#define MONTHLY_COUNTER   29
 
 enum InspectionType
 {
@@ -25,6 +29,7 @@ class Inspection
     Data GetData(int index);
     bool InsertData(int index, Data data);
     
+    void  AddMeasurement(int data);
     char* GetName();
     char* GetUnit();
     int   GetType();
@@ -33,6 +38,10 @@ class Inspection
 
     const char*    _name;
     const char*    _unitDisp;
+    int            _actualCounter;
+    int            _hourlyCounter;
+    int            _weeklyCounter;
+    int            _monthlylyCounter;
     InspectionType _type;
     Data           _storedData[NB_DATA];  
     Alarm          _alarms[MAX_ALARMS];      
